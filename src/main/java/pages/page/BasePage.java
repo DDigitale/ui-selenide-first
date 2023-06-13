@@ -1,9 +1,11 @@
-package pages;
+package pages.page;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 
-public abstract class BasePage {
+import static junit.framework.TestCase.assertEquals;
+
+public abstract class BasePage<P extends BasePage<P>> {
     protected void open(String url) {
         Selenide.open(url);
     }
@@ -11,4 +13,10 @@ public abstract class BasePage {
     public String getURL() {
         return WebDriverRunner.url();
     }
+
+    public P checkUrl(String url) {
+        assertEquals(url, getURL());
+        return (P) this;
+    }
 }
+
